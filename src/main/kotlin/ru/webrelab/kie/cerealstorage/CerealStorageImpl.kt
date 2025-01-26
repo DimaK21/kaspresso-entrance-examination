@@ -27,7 +27,7 @@ class CerealStorageImpl(
             throw IllegalArgumentException("Количество крупы не может быть отрицательным")
         }
         return if (storage.containsKey(cereal)) {
-            val tempValue = storage[cereal]!! + amount
+            val tempValue = (storage[cereal] ?: 0f) + amount
             putCereal(cereal, tempValue)
         } else {
             if ((storageCapacity - storage.count() * containerCapacity) >= containerCapacity) {
@@ -53,7 +53,7 @@ class CerealStorageImpl(
             throw IllegalArgumentException("Количество крупы не может быть отрицательным")
         }
         return if (storage.containsKey(cereal)) {
-            val tempValue = storage[cereal]!! - amount
+            val tempValue = (storage[cereal] ?: 0f) - amount
             if (tempValue < 0) {
                 storage[cereal] = 0f
                 tempValue + amount
@@ -67,8 +67,8 @@ class CerealStorageImpl(
     }
 
     override fun removeContainer(cereal: Cereal): Boolean {
-        if (!storage.containsKey(cereal)) return true
-        return if (abs(storage[cereal]!!) <= 0.01) {
+        val amount = storage[cereal] ?: return false
+        return if (abs(amount) <= 0.01) {
             storage.remove(cereal)
             true
         } else {
@@ -77,16 +77,12 @@ class CerealStorageImpl(
     }
 
     override fun getAmount(cereal: Cereal): Float {
-        return if (cereal in storage) {
-            storage[cereal]!!
-        } else {
-            0f
-        }
+        return storage[cereal] ?: 0f
     }
 
     override fun getSpace(cereal: Cereal): Float {
         return if (cereal in storage) {
-            containerCapacity - storage[cereal]!!
+            containerCapacity - (storage[cereal] ?: 0f)
         } else {
             if ((storageCapacity - storage.count() * containerCapacity) >= containerCapacity) {
                 containerCapacity
@@ -97,7 +93,9 @@ class CerealStorageImpl(
     }
 
     override fun toString(): String {
-        return "CerealStorageImpl(containerCapacity=$containerCapacity, storageCapacity=$storageCapacity)"
+        return "Объём одного контейнера = $containerCapacity, " +
+                "Совокупный объём хранилища = $storageCapacity, " +
+                "Содержимое хранилища = $storage"
     }
 
 }
