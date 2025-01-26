@@ -128,10 +128,10 @@ class CerealStorageImplTest {
 
     @Test
     fun `getCereal should return the remainder`() {
-        val cerealStorageImpl2 = CerealStorageImpl(10f, 20f)
-        cerealStorageImpl2.addCereal(Cereal.PEAS, 5f)
+        val cerealStorageImpl = CerealStorageImpl(10f, 20f)
+        cerealStorageImpl.addCereal(Cereal.PEAS, 5f)
         assertEquals(
-            cerealStorageImpl2.getCereal(Cereal.PEAS, 9f),
+            cerealStorageImpl.getCereal(Cereal.PEAS, 9f),
             5f,
             0.01f
         )
@@ -148,19 +148,19 @@ class CerealStorageImplTest {
 
     @Test
     fun `removeContainer should return true if the container is destroyed`() {
-        val cerealStorageImpl2 = CerealStorageImpl(10f, 20f)
-        cerealStorageImpl2.addCereal(Cereal.RICE, 1f)
-        cerealStorageImpl2.getCereal(Cereal.RICE, 1f)
+        val cerealStorageImpl = CerealStorageImpl(10f, 20f)
+        cerealStorageImpl.addCereal(Cereal.RICE, 1f)
+        cerealStorageImpl.getCereal(Cereal.RICE, 1f)
         assertTrue(
-            cerealStorageImpl2.removeContainer(Cereal.RICE)
+            cerealStorageImpl.removeContainer(Cereal.RICE)
         )
     }
 
     @Test
     fun `removeContainer should return false if the container is not present`() {
-        val cerealStorageImpl3 = CerealStorageImpl(10f, 20f)
+        val cerealStorageImpl = CerealStorageImpl(10f, 20f)
         assertFalse(
-            cerealStorageImpl3.removeContainer(Cereal.RICE)
+            cerealStorageImpl.removeContainer(Cereal.RICE)
         )
     }
 
@@ -186,11 +186,11 @@ class CerealStorageImplTest {
 
     @Test
     fun `getCereal should decrease the amount of cereal, and getAmount should return the remainder`() {
-        val cerealStorageImpl2 = CerealStorageImpl(10f, 20f)
-        cerealStorageImpl2.addCereal(Cereal.PEAS, 5f)
-        cerealStorageImpl2.getCereal(Cereal.PEAS, 3f)
+        val cerealStorageImpl = CerealStorageImpl(10f, 20f)
+        cerealStorageImpl.addCereal(Cereal.PEAS, 5f)
+        cerealStorageImpl.getCereal(Cereal.PEAS, 3f)
         assertEquals(
-            cerealStorageImpl2.getAmount(Cereal.PEAS),
+            cerealStorageImpl.getAmount(Cereal.PEAS),
             2f,
             0.01f
         )
@@ -209,9 +209,9 @@ class CerealStorageImplTest {
 
     @Test
     fun `getSpace should return the size of the container if it does not exist and can be created`() {
-        val cerealStorageImpl2 = CerealStorageImpl(10f, 20f)
+        val cerealStorageImpl = CerealStorageImpl(10f, 20f)
         assertEquals(
-            cerealStorageImpl2.getSpace(Cereal.PEAS),
+            cerealStorageImpl.getSpace(Cereal.PEAS),
             10f,
             0.01f
         )
@@ -219,10 +219,10 @@ class CerealStorageImplTest {
 
     @Test
     fun `getSpace should return zero if the container does not exist and cannot be created`() {
-        val cerealStorageImpl3 = CerealStorageImpl(10f, 15f)
-        cerealStorageImpl3.addCereal(Cereal.PEAS, 10f)
+        val cerealStorageImpl = CerealStorageImpl(10f, 15f)
+        cerealStorageImpl.addCereal(Cereal.PEAS, 10f)
         assertEquals(
-            cerealStorageImpl3.getSpace(Cereal.BULGUR),
+            cerealStorageImpl.getSpace(Cereal.BULGUR),
             0f,
             0.01f
         )
